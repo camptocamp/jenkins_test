@@ -21,3 +21,8 @@ stage name: 'Test docker image', concurrency: 1
 node {
   sh 'docker run raphink/jenkins-test:latest'
 }
+
+stage name: 'Push to dockerhub', concurrency: 1
+node {
+  docker.push('raphink/jenkins-test:latest')
+  }
