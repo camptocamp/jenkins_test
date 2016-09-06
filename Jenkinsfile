@@ -22,7 +22,7 @@ node {
   sh "docker run camptocamp/jenkins-test:${env.BUILD_TAGS}"
 
   stage 'Push to dockerhub'
-  docker.withRegistry('https://docker.io/', 'dockerhubc2c') {
+  docker.withRegistry('https://registry.hub.docker.com', 'dockerhubc2c') {
     cont.push()
     cont.push('latest')
   }
