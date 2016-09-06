@@ -1,17 +1,18 @@
-parallel 'simple build': {
-  docker.image('golang').inside {
-    checkout scm
-    sh 'go build .'
-  }
-}, 'run tests': {
-  docker.image('golang').inside {
-    checkout scm
-    sh 'go test -v ./...'
-  }
+stage name: 'Test', concurrency: 1
+docker.image('golang').inside {
+  checkout scm
+  sh 'go test -v ./...'
 }
 
-docker.image('jpetazzo/dind').inside {
+stage name: 'Static build', concurrency: 1
+docker.image('golang').inside {
   checkout scm
-  sh 'go build -a -installsuffix cgo -o test test.go'
+  sh 'go build -a -installsuffix cgo -o jenkins-test test.go'
+  stash includes: 'jenkins-test', name: 'jenkins-test-static'
+}
+
+stage name: 'Docker image build', concurrency: 1
+docker.image('jpetazzo/dind').inside {
+  unstash 'jenkins-test-static'
   sh 'docker build .'
 }
