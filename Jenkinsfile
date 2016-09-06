@@ -16,11 +16,14 @@ node {
 
   stage 'Docker image build'
   unstash 'jenkins-test-static'
-  def cont = docker.build "raphink/jenkins-test:${env.BUILD_TAGS}"
+  def cont = docker.build "camptocamp/jenkins-test:${env.BUILD_TAGS}"
 
   stage 'Test docker image'
-  sh "docker run raphink/jenkins-test:${env.BUILD_TAGS}"
+  sh "docker run camptocamp/jenkins-test:${env.BUILD_TAGS}"
 
   stage 'Push to dockerhub'
-  cont.push()
+  docker.withRegistry('https://docker.io/', 'dockerhubc2c') {
+    cont.push()
+    cont.push('latest')
+  }
 }
