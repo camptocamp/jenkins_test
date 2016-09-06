@@ -14,5 +14,6 @@ docker.image('golang').inside {
 stage name: 'Docker image build', concurrency: 1
 docker.image('jpetazzo/dind').inside {
   unstash 'jenkins-test-static'
+  sh 'service docker restart'
   sh 'docker build .'
 }
