@@ -16,3 +16,10 @@ node {
   unstash 'jenkins-test-static'
   docker.build 'raphink/jenkins-test:latest'
 }
+
+stage name: 'Test docker image', concurrency: 1
+node {
+  docker.image('raphink/jenkins-test:latest').withRun { c ->
+    sh '/jenkins-test'
+  }
+}
