@@ -1,3 +1,3 @@
 FROM scratch
 
-ADD test /
+ADD jenkins-test /
