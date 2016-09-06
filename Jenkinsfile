@@ -1,10 +1,4 @@
-node ('linux'){
-  stage 'Build and Test'
+docker.image('golang').inside {
   checkout scm
-  sh 'cat /etc/passwd'
-}
-
-docker.image('busybox').inside {
-  checkout scm
-  sh 'cat /etc/group'
+  sh 'go build .'
 }
