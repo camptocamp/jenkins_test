@@ -7,7 +7,7 @@ docker.image('golang').inside {
 stage name: 'Static build', concurrency: 1
 docker.image('golang').inside {
   checkout scm
-  sh 'go build -a -installsuffix cgo -o jenkins-test test.go'
+  sh 'go build -a -installsuffix cgo -o jenkins-test main.go'
   stash includes: 'jenkins-test', name: 'jenkins-test-static'
 }
 
