@@ -16,11 +16,11 @@ node {
 
   stage 'Docker image build'
   unstash 'jenkins-test-static'
-  docker.build 'raphink/jenkins-test:latest'
+  def cont = docker.build "raphink/jenkins-test:${env.BUILD_TAGS}"
 
   stage 'Test docker image'
-  sh 'docker run raphink/jenkins-test:latest'
+  sh "docker run raphink/jenkins-test:${env.BUILD_TAGS}"
 
   stage 'Push to dockerhub'
-  docker.push('raphink/jenkins-test:latest')
+  cont.push()
 }
