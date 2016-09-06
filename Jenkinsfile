@@ -14,7 +14,7 @@ node {
     stash includes: 'jenkins-test', name: 'jenkins-test-static'
   }
 
-  docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+  docker.withRegistry('', 'dockerhub') {
     stage 'Docker image build'
     unstash 'jenkins-test-static'
     def cont = docker.build "camptocamp/jenkins-test"
