@@ -16,10 +16,10 @@ node {
 
   stage 'Docker image build'
   unstash 'jenkins-test-static'
-  def cont = docker.build "camptocamp/jenkins-test:${env.BUILD_TAGS}"
+  def cont = docker.build "camptocamp/jenkins-test"
 
   stage 'Test docker image'
-  sh "docker run camptocamp/jenkins-test:${env.BUILD_TAGS}"
+  sh "docker run camptocamp/jenkins-test"
 
   stage 'Push to dockerhub'
   docker.withRegistry('https://index.docker.io/v1/', 'dockerhubc2c') {
