@@ -3,3 +3,8 @@ node ('linux'){
   checkout scm
   sh 'cat /etc/passwd'
 }
+
+docker.image('busybox').inside {
+  checkout scm
+  sh 'cat /etc/group'
+}
