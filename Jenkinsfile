@@ -19,7 +19,5 @@ node {
 
 stage name: 'Test docker image', concurrency: 1
 node {
-  docker.image('raphink/jenkins-test:latest').withRun { c ->
-    sh '/jenkins-test'
-  }
+  sh 'docker run raphink/jenkins-test:latest'
 }
