@@ -1,4 +1,4 @@
-node {
+node('docker') {
 
   def golang = docker.image('golang:latest')
   golang.pull()  // make sure golang image is up-to-date
