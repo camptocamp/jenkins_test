@@ -23,9 +23,12 @@ node('docker') {
   stage 'Test docker image'
   sh "docker run camptocamp/jenkins-test"
 
+  /* Not working, see https://issues.jenkins-ci.org/browse/JENKINS-38018
+  
   stage 'Push to dockerhub'
   withDockerRegistry(registry: [credentialsId: 'dockerhub']) {
     cont.push()
     cont.push('latest')
   }
+  */
 }
