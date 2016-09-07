@@ -22,7 +22,7 @@ node {
   sh "docker run camptocamp/jenkins-test"
 
   stage 'Push to dockerhub'
-  docker.withDockerRegistry(registry: [url: '', credentialsId: 'dockerhub']) {
+  withDockerRegistry(registry: [url: '', credentialsId: 'dockerhub']) {
     cont.push()
     cont.push('latest')
   }
