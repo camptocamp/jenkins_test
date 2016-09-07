@@ -8,12 +8,13 @@ node('docker') {
     stage 'Checkout'
     checkout scm
   
-    stage 'Test'
-    sh 'go test -v ./...'
-  
-    stage 'Static build'
-    sh 'go build -a -installsuffix cgo -o jenkins-test main.go'
-    stash includes: 'jenkins-test', name: 'jenkins-test-static'
+    stage 'Test and static build'
+    parallel 'Test': {
+      sh 'go test -v ./...'
+    }, 'Static build': {
+      sh 'go build -a -installsuffix cgo -o jenkins-test main.go'
+      stash includes: 'jenkins-test', name: 'jenkins-test-static'
+    }
   }
 
   stage 'Docker image build'
