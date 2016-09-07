@@ -1,9 +1,11 @@
 node('docker') {
 
   def golang = docker.image('golang:latest')
+  stage 'Update golang image'
   golang.pull()  // make sure golang image is up-to-date
   
   golang.inside {
+    stage 'Checkout'
     checkout scm
   
     stage 'Test'
