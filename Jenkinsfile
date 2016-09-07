@@ -24,12 +24,13 @@ node('docker') {
   stage 'Test docker image'
   sh "docker run camptocamp/jenkins-test"
 
-  /* Not working, see https://issues.jenkins-ci.org/browse/JENKINS-38018
-  
   stage 'Push to dockerhub'
-  withDockerRegistry(registry: [credentialsId: 'dockerhub']) {
-    cont.push()
-    cont.push('latest')
+  // withDockerRegistry is not working, see https://issues.jenkins-ci.org/browse/JENKINS-38018
+  withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub',
+   usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+   sh "docker login -u '${USERNAME}' -p '${PASSWORD}'"
   }
-  */
+
+  cont.push()
+  cont.push('latest')
 }
