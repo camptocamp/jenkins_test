@@ -2,5 +2,5 @@ package main
 
 func ExampleMain() {
 	main()
-	// Output: Hello, world
+	// Output: Hello, world!
 }
