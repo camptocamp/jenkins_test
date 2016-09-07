@@ -27,7 +27,7 @@ node('docker') {
   def cont = docker.build "camptocamp/jenkins-test:${tag}"
 
   stage 'Test docker image'
-  sh "docker run camptocamp/jenkins-test"
+  sh "docker run camptocamp/jenkins-test:${tag}"
 
   stage 'Push to dockerhub'
   docker.withRegistry('', 'dockerhub') {
