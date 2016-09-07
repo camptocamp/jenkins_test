@@ -28,7 +28,7 @@ node('docker') {
   // withDockerRegistry is not working, see https://issues.jenkins-ci.org/browse/JENKINS-38018
   withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub',
    usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-   sh "docker login -u '$USERNAME' -p '$PASSWORD'"
+   sh 'docker login -u "$USERNAME" -p "$PASSWORD"'
   }
 
   cont.push()
