@@ -19,7 +19,12 @@ node('docker') {
 
   stage 'Docker image build'
   unstash 'jenkins-test-static'
-  def cont = docker.build "camptocamp/jenkins-test"
+  if (env.BRANCH_NAME == 'master') {
+    tag = 'latest'
+  } else {
+    tag = env.BRANCH_NAME
+  }
+  def cont = docker.build "camptocamp/jenkins-test:${tag}"
 
   stage 'Test docker image'
   sh "docker run camptocamp/jenkins-test"
