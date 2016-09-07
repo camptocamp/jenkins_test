@@ -29,8 +29,6 @@ node('docker') {
   withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub',
     usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
     sh 'docker login -u "$USERNAME" -p "$PASSWORD"'
-
-    cont.push()
-    cont.push('latest')
+    sh 'docker push camptocamp/jenkins-test'
   }
 }
