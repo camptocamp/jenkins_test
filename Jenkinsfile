@@ -14,15 +14,15 @@ node {
     stash includes: 'jenkins-test', name: 'jenkins-test-static'
   }
 
-  docker.withRegistry('', 'dockerhub') {
-    stage 'Docker image build'
-    unstash 'jenkins-test-static'
-    def cont = docker.build "camptocamp/jenkins-test"
+  stage 'Docker image build'
+  unstash 'jenkins-test-static'
+  def cont = docker.build "camptocamp/jenkins-test"
 
-    stage 'Test docker image'
-    sh "docker run camptocamp/jenkins-test"
+  stage 'Test docker image'
+  sh "docker run camptocamp/jenkins-test"
 
-    stage 'Push to dockerhub'
+  stage 'Push to dockerhub'
+  docker.withDockerRegistry(registry: [url: '', credentialsId: 'dockerhub']) {
     cont.push()
     cont.push('latest')
   }
