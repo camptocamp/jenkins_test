@@ -37,4 +37,12 @@ node('docker') {
   docker.withRegistry('', 'dockerhub') {
     cont.push()
   }
+
+  stage 'Approve deploy'
+  timeout(time: 7, unit: 'DAYS') {
+    input message: 'Do you want to deploy?', submitter: 'ops'
+  }
+
+  stage 'Deploy'
+  sh 'echo "Deployed"'
 }
