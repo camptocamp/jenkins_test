@@ -1,18 +1,22 @@
 node('docker') {
-
   def golang = docker.image('golang:latest')
-  stage 'Update golang image'
-  golang.pull()  // make sure golang image is up-to-date
   
-  golang.inside {
-    stage 'Checkout'
-    checkout scm
-  
-    stage 'Test and static build'
-    parallel 'Test': {
-      sh 'go test -v ./...'
-    }, 'Static build': {
-      sh 'go build -a -installsuffix cgo -o jenkins-test main.go'
+  stage 'Test and static build'
+  parallel 'Test': {
+    node('docker') {
+      checkout scm
+      golang.pull()  // make sure golang image is up-to-date
+      golang.inside {
+        sh 'go test -v ./...'
+      }
+    }
+  }, 'Static build': {
+    node {
+      checkout scm
+      golang.pull()  // make sure golang image is up-to-date
+      golang.inside {
+        sh 'go build -a -installsuffix cgo -o jenkins-test main.go'
+      }
       stash includes: 'jenkins-test', name: 'jenkins-test-static'
     }
   }
