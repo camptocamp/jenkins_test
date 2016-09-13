@@ -45,6 +45,14 @@ node('docker') {
         usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
       sh 'docker login -u "$USERNAME" -p "$PASSWORD"'
       cont.push()
+
+      versions = load 'versions'
+      v = versions.parse("2.3.4-5")
+
+      for (int i=0; i<v.size(); ++i) {
+        cont.push(v[i])
+      }
+
       sh 'rm -rf ~/.docker*'
     }
   }
