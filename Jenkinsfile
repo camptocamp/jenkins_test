@@ -7,18 +7,18 @@ node('docker') {
     parallel 'Test': {
       node('docker') {
         checkout scm
-          golang.pull()  // make sure golang image is up-to-date
-          golang.inside {
-            sh 'go test -v ./...'
-          }
+        golang.pull()  // make sure golang image is up-to-date
+        golang.inside {
+          sh 'go test -v ./...'
+        }
       }
     }, 'Static build': {
       node('docker') {
         checkout scm
-          golang.pull()  // make sure golang image is up-to-date
-          golang.inside {
-            sh 'go build -a -installsuffix cgo -o jenkins-test main.go'
-          }
+        golang.pull()  // make sure golang image is up-to-date
+        golang.inside {
+          sh 'go build -a -installsuffix cgo -o jenkins-test main.go'
+        }
         stash includes: 'jenkins-test', name: 'jenkins-test-static'
       }
     }
@@ -28,11 +28,11 @@ node('docker') {
   stage('Docker image build') {
     checkout scm
     unstash 'jenkins-test-static'
-      if (env.BRANCH_NAME == 'master') {
-        tag = 'latest'
-      } else {
-        tag = env.BRANCH_NAME
-      }
+    if (env.BRANCH_NAME == 'master') {
+      tag = 'latest'
+    } else {
+      tag = env.BRANCH_NAME
+    }
     cont = docker.build "camptocamp/jenkins-test:${tag}"
   }
 
@@ -45,14 +45,14 @@ node('docker') {
       cont.push()
     }
   }
+}
 
-  stage('Approve deploy') {
-    timeout(time: 7, unit: 'DAYS') {
-      input message: 'Do you want to deploy?', submitter: 'ops'
-    }
+stage('Approve deploy') {
+  timeout(time: 7, unit: 'DAYS') {
+    input message: 'Do you want to deploy?', submitter: 'ops'
   }
+}
 
-  stage('Deploy') {
-    sh 'echo "Deployed"'
-  }
+stage('Deploy') {
+  sh 'echo "Deployed"'
 }
