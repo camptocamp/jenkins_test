@@ -47,6 +47,7 @@ node('docker') {
       cont.push()
 
       versions = load 'versions.groovy'
+      // TODO: get version from tag
       v = versions.parse("2.3.4-5")
 
       for (int i=0; i<v.size(); ++i) {
