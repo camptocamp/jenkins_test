@@ -47,11 +47,15 @@ node('docker') {
       cont.push()
 
       versions = load 'versions.groovy'
-      // TODO: get version from tag
-      v = versions.parse("2.3.4-5")
-
-      for (int i=0; i<v.size(); ++i) {
-        cont.push(v[i])
+      tag = sh(
+        script: 'git tag --sort version:refname | tail -1',
+        returnStdout: true
+      ).trim()
+      if tag {
+        v = versions.parse(tag)
+        for (int i=0; i<v.size(); ++i) {
+          cont.push(v[i])
+        }
       }
 
       sh 'rm -rf ~/.docker*'
