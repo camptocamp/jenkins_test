@@ -1,6 +1,6 @@
 def parse(version) {
   // [2.3.4-5, 2.3.4-5.build6]
-  versions = [version, "${version}.build${env.BUILD_NUM}"]
+  versions = [version, "${version}.build${env.BUILD_NUMBER}"]
 
   // [2.3.4, 5]
   tokens = version.tokenize("-")
