@@ -20,4 +20,23 @@ def parse(version) {
   return versions
 }
 
+def getTag() {
+  tag = sh(
+    // script: 'git tag --sort version:refname | tail -1',
+    // Old git
+    script: 'git tag | tail -1',
+    returnStdout: true
+  ).trim()
+  return tag
+}
+
+def parseTag() {
+  tag = getTag()
+  if (tag) {
+    return parse(getTag)
+  } else {
+    return []
+  }
+}
+
 return this;
