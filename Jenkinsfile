@@ -47,10 +47,7 @@ node('docker') {
       cont.push()
 
       versions = load 'versions.groovy'
-      v = versions.parseTag()
-      for (int i=0; i<v.size(); ++i) {
-        cont.push(v[i])
-      }
+      versions.pushContainer(cont)
 
       sh 'rm -rf ~/.docker*'
     }

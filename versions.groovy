@@ -41,4 +41,12 @@ def parseTag() {
   }
 }
 
+// push all tags for given container
+def pushContainer(cont) {
+  v = parseTag()
+  for (int i=0; i<v.size(); ++i) {
+    cont.push(v[i])
+  }
+}
+
 return this;
