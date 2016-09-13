@@ -61,6 +61,8 @@ node('docker') {
       sh 'echo "RANCHER_URL=$RANCHER_URL"'
       sh 'echo "RANCHER_ACCESS_KEY=$RANCHER_ACCESS_KEY"'
       sh 'echo "RANCHER_SECRET_KEY=$RANCHER_SECRET_KEY"'
+
+      rancher.composeUp()
     }
   }
 }

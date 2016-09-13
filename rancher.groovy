@@ -9,4 +9,12 @@ def withEnvironment(url, cred, body) {
   }
 }
 
+def composeUp() {
+  sh "rancher-compose up"
+}
+
+def composeRm() {
+  sh "rancher-compose rm"
+}
+
 return this;
