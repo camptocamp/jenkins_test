@@ -6,14 +6,10 @@ def parse(version) {
   tokens = version.tokenize("-")
   upstream_tokens = tokens[0].tokenize(".")
 
-  // [2.3.4-5, 2.3.4-5.build6, 2.3.4, 2.3]
+  // [2.3.4-5, 2.3.4-5.build6, 2, 2.3, 2.3.4]
   for (int i=0; i<upstream_tokens.size(); ++i) {
-    versions << upstream_tokens.join(".")
-    upstream_tokens.pop()
+    versions << upstream_tokens[0..i].join(".")
   }
-  // Off-by-one errors...
-  // [2.3.4-5, 2.3.4-5.build6, 2.3.4, 2.3, 2]
-  versions << upstream_tokens.join(".")
 
   return versions
 }
