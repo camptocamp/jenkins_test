@@ -25,6 +25,7 @@ node('docker') {
   }
 
   stage('Docker image build') {
+    checkout scm
     unstash 'jenkins-test-static'
       if (env.BRANCH_NAME == 'master') {
         tag = 'latest'
