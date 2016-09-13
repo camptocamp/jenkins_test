@@ -24,9 +24,7 @@ def parse(version) {
 // get the tag associated with the latest git commit
 def getTag() {
   tag = sh(
-    // script: 'git tag --sort version:refname | tail -1',
-    // Old git
-    script: 'git tag | tail -1',
+    script: 'git describe --tags --exact-match',
     returnStdout: true
   ).trim()
   return tag
