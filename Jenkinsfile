@@ -41,7 +41,9 @@ node('docker') {
   }
 
   stage('Push to dockerhub') {
-    withDockerRegistry(registry: [credentialsId: 'dockerhub']) {
+    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub',
+        usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+      sh 'docker login -u "$USERNAME" -p "$PASSWORD"'
       cont.push()
     }
   }
