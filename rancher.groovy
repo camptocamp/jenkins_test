@@ -9,7 +9,7 @@ def withEnvironment(url, cred, body) {
       sh 'echo "debug: RANCHER_ACCESS_KEY=$RANCHER_ACCESS_KEY"'
       sh 'echo "debug: RANCHER_SECRET_KEY=$RANCHER_SECRET_KEY"'
 
-      body.call
+      body.call()
     }
   }
 }
