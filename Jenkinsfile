@@ -45,6 +45,7 @@ node('docker') {
         usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
       sh 'docker login -u "$USERNAME" -p "$PASSWORD"'
       cont.push()
+      sh 'rm -rf ~/.docker*'
     }
   }
 
