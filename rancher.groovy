@@ -4,9 +4,8 @@ def withEnvironment(url, cred, body) {
         credentialsId: cred,
         usernameVariable: 'RANCHER_ACCESS_KEY',
         passwordVariable: 'RANCHER_SECRET_KEY']]) {
-      try {
+
         body.call
-      }
     }
   }
 }
