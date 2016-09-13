@@ -11,4 +11,4 @@ def withEnvironment(url, cred, body) {
   }
 }
 
-this
+return this;
