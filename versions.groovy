@@ -1,3 +1,4 @@
+// parse a version and return all versions to tag
 def parse(version) {
   // [2.3.4-5, 2.3.4-5.build6]
   versions = [version, "${version}.build${env.BUILD_NUMBER}"]
@@ -20,6 +21,7 @@ def parse(version) {
   return versions
 }
 
+// get the tag associated with the latest git commit
 def getTag() {
   tag = sh(
     // script: 'git tag --sort version:refname | tail -1',
@@ -30,6 +32,8 @@ def getTag() {
   return tag
 }
 
+// get the tag associated with the latest git commit
+// and return all versions to tag
 def parseTag() {
   tag = getTag()
   if (tag) {
