@@ -54,5 +54,11 @@ stage('Approve deploy') {
 }
 
 stage('Deploy') {
-  sh 'echo "Deployed"'
+  rancher = load 'rancher.groovy'
+
+  rancher.withEnvironment('http://rancher.test/abcd', 'rancher-test') {
+    sh 'echo "RANCHER_URL=$RANCHER_URL"'
+    sh 'echo "RANCHER_ACCESS_KEY=$RANCHER_ACCESS_KEY"'
+    sh 'echo "RANCHER_SECRET_KEY=$RANCHER_SECRET_KEY"'
+  }
 }
