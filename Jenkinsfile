@@ -46,7 +46,7 @@ node('docker') {
       sh 'docker login -u "$USERNAME" -p "$PASSWORD"'
       cont.push()
 
-      versions = load 'versions'
+      versions = load 'versions.groovy'
       v = versions.parse("2.3.4-5")
 
       for (int i=0; i<v.size(); ++i) {
