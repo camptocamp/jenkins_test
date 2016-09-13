@@ -33,7 +33,7 @@ def getTag() {
 def parseTag() {
   tag = getTag()
   if (tag) {
-    return parse(getTag)
+    return parse(tag)
   } else {
     return []
   }
