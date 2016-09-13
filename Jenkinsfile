@@ -3,7 +3,7 @@
 node('docker') {
   def golang = docker.image('golang:latest')
   
-  stage 'Test and static build' {
+  stage('Test and static build') {
     parallel 'Test': {
       node('docker') {
         checkout scm
@@ -24,7 +24,7 @@ node('docker') {
     }
   }
 
-  stage 'Docker image build' {
+  stage('Docker image build') {
     unstash 'jenkins-test-static'
       if (env.BRANCH_NAME == 'master') {
         tag = 'latest'
@@ -34,23 +34,23 @@ node('docker') {
     def cont = docker.build "camptocamp/jenkins-test:${tag}"
   }
 
-  stage 'Test docker image' {
+  stage('Test docker image') {
     sh "docker run camptocamp/jenkins-test:${tag}"
   }
 
-  stage 'Push to dockerhub' {
+  stage('Push to dockerhub') {
     docker.withRegistry('', 'dockerhub') {
       cont.push()
     }
   }
 
-  stage 'Approve deploy' {
+  stage('Approve deploy') {
     timeout(time: 7, unit: 'DAYS') {
       input message: 'Do you want to deploy?', submitter: 'ops'
     }
   }
 
-  stage 'Deploy' {
+  stage('Deploy') {
     sh 'echo "Deployed"'
   }
 }
