@@ -41,7 +41,7 @@ node('docker') {
   }
 
   stage('Push to dockerhub') {
-    docker.withRegistry('', 'dockerhub') {
+    withDockerRegistry(registry: [credentialsId: 'dockerhub']) {
       cont.push()
     }
   }
