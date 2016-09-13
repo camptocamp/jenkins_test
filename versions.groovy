@@ -17,3 +17,5 @@ def parse(version) {
 
   return versions
 }
+
+return this;
