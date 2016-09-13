@@ -45,22 +45,22 @@ node('docker') {
       cont.push()
     }
   }
-}
 
-/*
-stage('Approve deploy') {
-  timeout(time: 7, unit: 'DAYS') {
-    input message: 'Do you want to deploy?', submitter: 'ops'
-  }
-}
-*/
+  /*
+     stage('Approve deploy') {
+     timeout(time: 7, unit: 'DAYS') {
+     input message: 'Do you want to deploy?', submitter: 'ops'
+     }
+     }
+   */
 
-stage('Deploy') {
-  rancher = load 'rancher.groovy'
+  stage('Deploy') {
+    rancher = load 'rancher.groovy'
 
-  rancher.withEnvironment('http://rancher.test/abcd', 'rancher-test') {
-    sh 'echo "RANCHER_URL=$RANCHER_URL"'
-    sh 'echo "RANCHER_ACCESS_KEY=$RANCHER_ACCESS_KEY"'
-    sh 'echo "RANCHER_SECRET_KEY=$RANCHER_SECRET_KEY"'
+    rancher.withEnvironment('http://rancher.test/abcd', 'rancher-test') {
+      sh 'echo "RANCHER_URL=$RANCHER_URL"'
+      sh 'echo "RANCHER_ACCESS_KEY=$RANCHER_ACCESS_KEY"'
+      sh 'echo "RANCHER_SECRET_KEY=$RANCHER_SECRET_KEY"'
+    }
   }
 }
