@@ -24,6 +24,7 @@ node('docker') {
     }
   }
 
+  def cont = null
   stage('Docker image build') {
     checkout scm
     unstash 'jenkins-test-static'
@@ -32,7 +33,7 @@ node('docker') {
       } else {
         tag = env.BRANCH_NAME
       }
-    def cont = docker.build "camptocamp/jenkins-test:${tag}"
+    cont = docker.build "camptocamp/jenkins-test:${tag}"
   }
 
   stage('Test docker image') {
