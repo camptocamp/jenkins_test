@@ -51,7 +51,7 @@ node('docker') {
         script: 'git tag --sort version:refname | tail -1',
         returnStdout: true
       ).trim()
-      if tag {
+      if (tag) {
         v = versions.parse(tag)
         for (int i=0; i<v.size(); ++i) {
           cont.push(v[i])
