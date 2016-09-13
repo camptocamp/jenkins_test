@@ -56,13 +56,11 @@ node('docker') {
     }
   }
 
-  /*
-     stage('Approve deploy') {
-     timeout(time: 7, unit: 'DAYS') {
-     input message: 'Do you want to deploy?', submitter: 'ops'
-     }
-     }
-   */
+  stage('Approve deploy') {
+    timeout(time: 7, unit: 'DAYS') {
+      input message: 'Do you want to deploy?', submitter: 'ops'
+    }
+  }
 
   stage('Deploy') {
     rancher = load 'rancher.groovy'
