@@ -1,4 +1,4 @@
-#!/usr/bin/env groovy
+#!groovy
 
 node('docker') {
   def golang = docker.image('golang:latest')
