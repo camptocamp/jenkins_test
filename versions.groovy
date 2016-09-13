@@ -8,7 +8,13 @@ def parse(version) {
 
   // [2.3.4-5, 2.3.4-5.build6, 2, 2.3, 2.3.4]
   for (int i=0; i<upstream_tokens.size(); ++i) {
-    versions << upstream_tokens[0..i].join(".")
+    // createRange is blacklisted in Jenkinsfile
+    // versions << upstream_tokens[0..i].join(".")
+    version = upstream_tokens[0]
+    for (int j=1; j<=i; ++j) {
+      version += ".${upstream_tokens[j]}"
+    }
+    versions << version
   }
 
   return versions
